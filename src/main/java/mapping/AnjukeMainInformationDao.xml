@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.AnjukeMainInformationDao" >
+  <resultMap id="BaseResultMap" type="pojo.AnjukeMainInformation" >
+    <id column="number" property="number" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="area" property="area" jdbcType="DOUBLE" />
+    <result column="house_type" property="houseType" jdbcType="VARCHAR" />
+    <result column="rent_way" property="rentWay" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="release_time" property="releaseTime" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="pojo.AnjukeMainInformation" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    number, name, address, area, house_type, rent_way, price, payment_method, contacts, 
+    release_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from anjuke_main_information
+    where number = #{number,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from anjuke_main_information
+    where number = #{number,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="pojo.AnjukeMainInformation" >
+    insert into anjuke_main_information (number, name, address, 
+      area, house_type, rent_way, 
+      price, payment_method, contacts, 
+      release_time, description)
+    values (#{number,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{area,jdbcType=DOUBLE}, #{houseType,jdbcType=VARCHAR}, #{rentWay,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}, #{paymentMethod,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR}, 
+      #{releaseTime,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="pojo.AnjukeMainInformation" >
+    insert into anjuke_main_information
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="area != null" >
+        area,
+      </if>
+      <if test="houseType != null" >
+        house_type,
+      </if>
+      <if test="rentWay != null" >
+        rent_way,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="paymentMethod != null" >
+        payment_method,
+      </if>
+      <if test="contacts != null" >
+        contacts,
+      </if>
+      <if test="releaseTime != null" >
+        release_time,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="number != null" >
+        #{number,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="houseType != null" >
+        #{houseType,jdbcType=VARCHAR},
+      </if>
+      <if test="rentWay != null" >
+        #{rentWay,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentMethod != null" >
+        #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null" >
+        #{releaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="pojo.AnjukeMainInformation" >
+    update anjuke_main_information
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null" >
+        area = #{area,jdbcType=DOUBLE},
+      </if>
+      <if test="houseType != null" >
+        house_type = #{houseType,jdbcType=VARCHAR},
+      </if>
+      <if test="rentWay != null" >
+        rent_way = #{rentWay,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentMethod != null" >
+        payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="releaseTime != null" >
+        release_time = #{releaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where number = #{number,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="pojo.AnjukeMainInformation" >
+    update anjuke_main_information
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      area = #{area,jdbcType=DOUBLE},
+      house_type = #{houseType,jdbcType=VARCHAR},
+      rent_way = #{rentWay,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      release_time = #{releaseTime,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where number = #{number,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="pojo.AnjukeMainInformation" >
+    update anjuke_main_information
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      area = #{area,jdbcType=DOUBLE},
+      house_type = #{houseType,jdbcType=VARCHAR},
+      rent_way = #{rentWay,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      payment_method = #{paymentMethod,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      release_time = #{releaseTime,jdbcType=VARCHAR}
+    where number = #{number,jdbcType=BIGINT}
+  </update>
+</mapper>
