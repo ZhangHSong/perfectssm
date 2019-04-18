@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.ShowAnjukeMapper">
+
+	<resultMap id="BaseResultMap" type="pojo.ShowAnjuke">
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="area" property="area" jdbcType="DOUBLE" />
+		<result column="house_type" property="houseType" jdbcType="VARCHAR" />
+		<result column="rent_way" property="rentWay" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="DOUBLE" />
+	</resultMap>
+	
+
+	<select id="list" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select name,area,house_type,rent_way,price,payment_method,address,score 
+		from anjuke_main_information,anjuke_address,anjuke_score
+		where anjuke_main_information.number=anjuke_address.number and
+		anjuke_score.number=anjuke_address.number and city = #{city,jdbcType=VARCHAR}
+		order by score DESC
+	</select>
+
+<select id="listMap" resultType="java.lang.String" parameterType="java.lang.String">
+		select address 
+		from anjuke_main_information,anjuke_address
+		where anjuke_main_information.number=anjuke_address.number and city = #{city,jdbcType=VARCHAR}
+	</select>
+
+
+</mapper>
+

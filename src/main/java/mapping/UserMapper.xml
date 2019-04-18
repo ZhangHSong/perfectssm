@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.UserMapper">
+	<!-- 先定义一个Interface，UserMapper，然后Mapper文件的namespace指向的就是这个Interface， UserInterface里定义的方法和UserMapper.xml文件中的一样, 
+		然后代码里直接使用接口 -->
+
+	<resultMap id="BaseResultMap" type="pojo.ShowAnjuke">
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="area" property="area" jdbcType="DOUBLE" />
+		<result column="house_type" property="houseType" jdbcType="VARCHAR" />
+		<result column="rent_way" property="rentWay" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="payment_method" property="paymentMethod"
+			jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="DOUBLE" />
+	</resultMap>
+
+	<!-- 根据分页数据start 和size查询数据 -->
+	<select id="findByPage" parameterType="Map" resultMap="BaseResultMap">
+		select
+		name,area,house_type,rent_way,price,payment_method,address,score
+		from
+		anjuke_main_information,anjuke_address,anjuke_score
+		where
+		anjuke_main_information.number=anjuke_address.number and
+		anjuke_score.number=anjuke_address.number and city = #{city}
+		order by
+		score DESC
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<!-- 查询用户记录总数 -->
+	<select id="selectCount" parameterType="java.lang.String" resultType="int">
+		select count(*)
+		from
+		anjuke_main_information,anjuke_address,anjuke_score
+		where
+		anjuke_main_information.number=anjuke_address.number and
+		anjuke_score.number=anjuke_address.number and city = #{city,jdbcType=VARCHAR}
+	</select>
+
+</mapper>
