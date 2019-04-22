@@ -52,14 +52,12 @@
 			<div style="margin:0 auto;width:100%;height:50px;padding-left:260px">
 				<form class="navbar-form navbar-left searchform" action="main" method="post" >
 				
-				
 				<!-- 来源下拉框 -->
 				 <div class="col-lg-2"  style="padding-right:35px">
-				            <select class="form-control" onchange="selectOnchang(this)">
+				            <select class="form-control"   name="site"  onchange="selectOnchang(this)">
 				                <option>安居客</option>
 				                <option>链家</option>
-				                <option>自如</option>
-				                <option>58同城</option>
+				                <option>综合</option>
 				            </select>
 				 </div>
 				
@@ -80,9 +78,6 @@
 		            </select>
 		        </div>
 
-					 <!--  <input type="text" class="form-control" placeholder="city"  name="city"   aria-describedby="basic-addon1">-->
-					  <!--  <input type="text" class="form-control" placeholder="rentWay"  name="rentWay"   aria-describedby="basic-addon1">-->
-					   
 				<!-- 租赁方式下拉框 -->
 				<div class="col-lg-2"  style="padding:0">
 				            <select class="form-control"   name="rentWay" onchange="selectOnchang(this)">
@@ -95,10 +90,13 @@
 			   <div class="col-lg-4"  style="padding:0">
    			    	<input type="text" class="form-control" placeholder="location"   name="location"  aria-describedby="basic-addon1">
 			   </div>
+			   
 				<input type="hidden" name="currentPage" value="1"/>
+				
 				<div class="col-lg-1"  style="padding-left:10px">
 					<button type="submit" class="btn btn-primary"  id="searchright">GO!</button>
 				</div>
+				
 				</form>
 			</div>
 			

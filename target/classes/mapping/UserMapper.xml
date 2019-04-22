@@ -6,25 +6,39 @@
 
 	<resultMap id="BaseResultMap" type="pojo.ShowAnjuke">
 		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="area" property="area" jdbcType="DOUBLE" />
 		<result column="house_type" property="houseType" jdbcType="VARCHAR" />
 		<result column="rent_way" property="rentWay" jdbcType="VARCHAR" />
 		<result column="price" property="price" jdbcType="DOUBLE" />
 		<result column="payment_method" property="paymentMethod"
 			jdbcType="VARCHAR" />
-		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="score" property="score" jdbcType="DOUBLE" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+		<result column="distance" property="distance" jdbcType="DOUBLE" />
 	</resultMap>
 
 	<!-- 根据分页数据start 和size查询数据 -->
 	<select id="findByPage" parameterType="Map" resultMap="BaseResultMap">
 		select
-		name,area,house_type,rent_way,price,payment_method,address,score
+		name,address,area,house_type,rent_way,price,payment_method,score,url,distance
 		from
-		anjuke_main_information,anjuke_address,anjuke_score
+		main_score
 		where
-		anjuke_main_information.number=anjuke_address.number and
-		anjuke_score.number=anjuke_address.number and city = #{city}
+		rent_way = #{rentWay,jdbcType=VARCHAR}
+		order by
+		score DESC
+		<if test="start!=null and size!=null">
+			limit #{start},#{size}
+		</if>
+	</select>
+	
+	<!-- 根据分页数据start 和size查询数据 -->
+	<select id="findByPageAll" parameterType="Map" resultMap="BaseResultMap">
+		select
+		name,address,area,house_type,rent_way,price,payment_method,score,url,distance
+		from
+		main_score
 		order by
 		score DESC
 		<if test="start!=null and size!=null">
@@ -33,13 +47,117 @@
 	</select>
 
 	<!-- 查询用户记录总数 -->
-	<select id="selectCount" parameterType="java.lang.String" resultType="int">
+	<select id="selectCountOne" resultType="int">
 		select count(*)
 		from
-		anjuke_main_information,anjuke_address,anjuke_score
+		main_score
 		where
-		anjuke_main_information.number=anjuke_address.number and
-		anjuke_score.number=anjuke_address.number and city = #{city,jdbcType=VARCHAR}
+		rent_way = #{rentWay,jdbcType=VARCHAR}
 	</select>
+	
+	<!-- 查询用户记录总数 -->
+	<select id="selectCountTwo" resultType="int">
+		select count(*)
+		from
+		main_score
+	</select>
+	
+	
+
+	<resultMap id="OtherResultMap" type="pojo.ShowOther">
+		<result column="row_col" property="rowCol" jdbcType="VARCHAR" />
+		<result column="score" property="score" jdbcType="DOUBLE" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+	<select id="find" resultMap="OtherResultMap">
+		select row_col,score,url
+		from
+		main_score
+		where
+		rent_way = #{rentWay,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findAll" resultMap="OtherResultMap">
+		select row_col,score,url
+		from
+		main_score
+	</select>
+	
+
+	<resultMap id="BaseResultMapTwo" type="pojo.Anjuke">
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="area" property="area" jdbcType="DOUBLE" />
+		<result column="house_type" property="houseType" jdbcType="VARCHAR" />
+		<result column="rent_way" property="rentWay" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="DOUBLE" />
+		<result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="row_col" property="rowCol" jdbcType="VARCHAR" />
+		<result column="url" property="url" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="findBasic" resultMap="BaseResultMapTwo">
+		select
+		name,area,house_type,rent_way,price,payment_method,address,row_col,url
+		from
+		main_information
+		where
+		city = #{city,jdbcType=VARCHAR}  and rent_way = #{rentWay,jdbcType=VARCHAR}  
+	</select>
+	
+	<select id="findAllBasic"  resultMap="BaseResultMapTwo">
+		select
+		name,area,house_type,rent_way,price,payment_method,address,row_col,url
+		from
+		main_information
+		where
+		city = #{city,jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="findBasicSite" resultMap="BaseResultMapTwo">
+		select
+		name,area,house_type,rent_way,price,payment_method,address,row_col,url
+		from
+		main_information
+		where
+		city = #{city,jdbcType=VARCHAR}  and rent_way = #{rentWay,jdbcType=VARCHAR}  and site = #{site,jdbcType=VARCHAR}  
+	</select>
+	
+	<select id="findAllBasicSite"  resultMap="BaseResultMapTwo">
+		select
+		name,area,house_type,rent_way,price,payment_method,address,row_col,url
+		from
+		main_information
+		where
+		city = #{city,jdbcType=VARCHAR}   and site = #{site,jdbcType=VARCHAR}  
+	</select>
+
+
+	<insert id="insertScore" parameterType="java.util.List" >
+	    			insert into main_score
+	    			(name,area,house_type,rent_way,price,payment_method,address,row_col,url,distance,score)
+	    			values
+	    			<foreach collection="list" item="item" index="index" separator=",">
+	    				(
+	    					#{item.name,jdbcType=VARCHAR},
+	    					#{item.area,jdbcType=DOUBLE},
+	    					#{item.houseType,jdbcType=VARCHAR},
+	    					#{item.rentWay,jdbcType=VARCHAR},
+	    					#{item.price,jdbcType=DOUBLE},
+	    					#{item.paymentMethod,jdbcType=VARCHAR},
+	    					#{item.address,jdbcType=VARCHAR},
+	    					#{item.rowCol,jdbcType=VARCHAR},
+	    					#{item.url,jdbcType=VARCHAR},
+	    					#{item.distance,jdbcType=DOUBLE},
+	    					#{item.score,jdbcType=DOUBLE}
+	    				)
+	    		     </foreach>		
+	</insert> 
+
+	<delete id="deleteScore" >
+        truncate table main_score;
+    </delete>
 
 </mapper>

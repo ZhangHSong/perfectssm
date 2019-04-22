@@ -14,10 +14,15 @@ public class ShowAnjuke {
 
 	private double price;
 
+	private String rowCol;
+	
 	private String paymentMethod;
 
 	private double score;
 
+	private String url;
+
+	private double distance;
 
 	public String getName() {
 		return name;
@@ -83,5 +88,36 @@ public class ShowAnjuke {
 		this.score = score;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public void setArea(double area) {
+		this.area = area;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public double getDistance() {
+		return distance;
+	}
+
+	public void setDistance(double distance) {
+		this.distance = distance;
+	}
+
+	public String getRowCol() {
+		return rowCol;
+	}
+
+	public void setRowCol(String rowCol) {
+		this.rowCol = rowCol;
+	}
 
 }
