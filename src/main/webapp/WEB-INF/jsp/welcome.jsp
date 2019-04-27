@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 
-<title>SerachRight</title>
+<title>SearchRight</title>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -47,7 +47,7 @@
 <body>
 	<div class="jumbotron">
 		<div class="container" align="center">
-			<h1>欢迎来到SerachRight</h1>
+			<h1>欢迎来到SearchRight</h1>
 			<p>是否厌倦了百度的广告，来试试我们吧!</p>
 			<div style="margin:0 auto;width:100%;height:50px;padding-left:260px">
 				<form class="navbar-form navbar-left searchform" action="main" method="post" >

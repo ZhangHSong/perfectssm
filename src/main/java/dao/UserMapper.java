@@ -19,8 +19,6 @@ public interface UserMapper {
 
 	int selectCountTwo(@Param(value = "city")String city);
 	
-	
-	
 	/**
 	 * 分页操作，调用findByPage limit分页方法
 	 * 
@@ -47,4 +45,6 @@ public interface UserMapper {
 	int insertScore(List<ShowAnjuke> list);
 	
 	int deleteScore();
+	
+
 }

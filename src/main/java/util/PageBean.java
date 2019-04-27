@@ -3,7 +3,7 @@ package util;
 import java.util.List;
 /**
  * 分页实体类
- * @author Peng
+ * @author zhang
  * @Date2016年12月13日 上午9:40:10
  */
 public class PageBean<T> {

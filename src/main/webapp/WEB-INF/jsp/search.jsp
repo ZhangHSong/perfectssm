@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
 
-<title>SerachRight</title>
+<title>SearchRight</title>
 <link
 	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -71,23 +71,23 @@ body {
 				  <ul class="pagination" style="margin:8px 0">
 					    <li>
 						      <c:if test="${requestScope.pagemsg.currPage != 1}">
-							      	<a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&currentPage=1&rentWay=${requestScope.rentWay}" aria-label="Previous">
+							      	<a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&location=${requestScope.location}&currentPage=1&rentWay=${requestScope.rentWay}" aria-label="Previous">
 								        <span aria-hidden="true">首页</span> </a>
 							   </c:if>
 					    </li>
 					    <li>
 					   		 <c:if test="${requestScope.pagemsg.currPage != 1}">
-					   				 <a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&currentPage=${requestScope.pagemsg.currPage-1}&rentWay=${requestScope.rentWay}">上一页</a>
+					   				 <a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&location=${requestScope.location}&currentPage=${requestScope.pagemsg.currPage-1}&rentWay=${requestScope.rentWay}">上一页</a>
 					   		</c:if>
 					    </li>
 					    <li>
 							    <c:if test="${requestScope.pagemsg.currPage != requestScope.pagemsg.totalPage}">
-							  		  <a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&currentPage=${requestScope.pagemsg.currPage+1}&rentWay=${requestScope.rentWay}">下一页</a>
+							  		  <a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&location=${requestScope.location}&currentPage=${requestScope.pagemsg.currPage+1}&rentWay=${requestScope.rentWay}">下一页</a>
 							    </c:if>
 					    </li>
 					    <li>
 					    		<c:if test="${requestScope.pagemsg.currPage != requestScope.pagemsg.totalPage}">
-								      <a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&currentPage=${requestScope.pagemsg.totalPage}&rentWay=${requestScope.rentWay}" aria-label="Next">
+								      <a href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&location=${requestScope.location}&currentPage=${requestScope.pagemsg.totalPage}&rentWay=${requestScope.rentWay}" aria-label="Next">
 								        <span aria-hidden="true">尾页</span> </a>
 						      </c:if>
 					    </li>
@@ -98,7 +98,7 @@ body {
 	
 	<div style="margin:0 auto;width:900px;height:50px;text-align:center">
 	
-		<a href="${pageContext.request.contextPath }/showMap?rentWay=${requestScope.rentWay}">
+		<a href="${pageContext.request.contextPath }/showMap?rentWay=${requestScope.rentWay}&location=${requestScope.location}">
 			<button type="button" class="btn btn-default">高德地图</button>
 		</a>
 		<a href="${pageContext.request.contextPath }/welcomePro">

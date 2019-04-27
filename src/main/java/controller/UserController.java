@@ -3,14 +3,18 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+
 import pojo.Anjuke;
 import pojo.ShowAnjuke;
 import pojo.ShowOther;
@@ -27,22 +31,44 @@ public class UserController {
 	@Resource
 	private UserService userService;
 
-	// http://localhost:8080/perfectssm/welcome
+	/*
+	 * http://localhost:8080/perfectssm/welcome  
+	 * 首页
+	 */
 	@RequestMapping(value = "welcome")
 	public String index(Model model) {
 		return "welcome";
 	}
 
-	// http://localhost:8080/perfectssm/welcome
+	/*
+	 * http://localhost:8080/perfectssm/welcomePro  
+	 * 返回首页
+	 */
 	@RequestMapping(value = "welcomePro")
 	public String indexPro(Model model) {
 		userService.deleteScore();
 		return "welcome";
 	}
 
-	// 高德地图
+	/*
+	 * http://localhost:8080/perfectssm/showMap  
+	 * 高德地图
+	 * 检索的是临时表main_score的数据
+	 */
 	@RequestMapping("/showMap")
-	public String toIndexFour(@RequestParam(value = "rentWay") String rentWay, Model model) {
+	public String toIndexFour(@RequestParam(value = "rentWay") String rentWay, 
+			@RequestParam(value = "location") String location, Model model) {
+		
+		String[] arr1 = new String[2];
+		Map<String, String> json1 = GetPoint.getGeocoderLatitude(location);
+		arr1[0] = json1.get("lng");
+		arr1[1] = json1.get("lat");
+		JSONArray jsonSelf = new JSONArray();
+		jsonSelf.add(arr1[0]);
+		jsonSelf.add(arr1[1]);
+		String jsson = JSONArray.toJSONString(jsonSelf);
+		model.addAttribute("jsonSelf", jsson);// 回显数据
+		
 		if (rentWay.equals("均可")) {
 			List<ShowOther> list = userService.findAll();
 			JSONArray jsonData = new JSONArray();
@@ -79,14 +105,20 @@ public class UserController {
 			model.addAttribute("jsonData", nvrsjson);// 回显数据
 		}
 		model.addAttribute("rentWay", rentWay);
+		model.addAttribute("location", location);
 		return "map";
 	}
 
-	// http://localhost:8080/perfectssm/main
+	/*
+	 * http://localhost:8080/perfectssm/mainPage  
+	 * 分页按钮
+	 * 检索的是临时表main_score的数据
+	 */
 	@RequestMapping(value = "mainPage")
 	public String mainPage(@RequestParam(value = "city") String city,
 			@RequestParam(value = "currentPage", defaultValue = "1", required = false) int currentPage,
-			@RequestParam(value = "rentWay", defaultValue = "均可", required = false) String rentWay, Model model) {
+			@RequestParam(value = "rentWay", defaultValue = "均可", required = false) String rentWay, 
+			@RequestParam(value = "location") String location, Model model) {
 		if (rentWay.equals("均可")) {
 			PageBean<ShowAnjuke> pageBean = userService.findByPageAll(currentPage, city);
 			model.addAttribute("pagemsg", pageBean);// 回显分页数据
@@ -96,10 +128,15 @@ public class UserController {
 		}
 		model.addAttribute("city", city);
 		model.addAttribute("rentWay", rentWay);
+		model.addAttribute("location", location);
 		return "search";
 	}
 
-	// http://localhost:8080/perfectssm/main
+	/*
+	 * http://localhost:8080/perfectssm/main
+	 * 从首页跳转到分页界面
+	 * 检索的是表main_information的数据，生成临时表main_score
+	 */
 	@RequestMapping(value = "main")
 	public String main(@RequestParam(value = "city") String city,@RequestParam(value = "site") String site,
 			@RequestParam(value = "currentPage", defaultValue = "1", required = false) int currentPage,
@@ -174,13 +211,8 @@ public class UserController {
 		}
 		model.addAttribute("city", city);
 		model.addAttribute("rentWay", rentWay);
+		model.addAttribute("location", location);
 		return "search";
-	}
-
-	// http://localhost:8080/perfectssm/NewFile
-	@RequestMapping(value = "NewFile")
-	public String NewFile(Model model) {
-		return "NewFile";
 	}
 
 }

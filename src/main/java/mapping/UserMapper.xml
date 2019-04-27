@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="dao.UserMapper">
-	<!-- 先定义一个Interface，UserMapper，然后Mapper文件的namespace指向的就是这个Interface， UserInterface里定义的方法和UserMapper.xml文件中的一样, 
-		然后代码里直接使用接口 -->
 
 	<resultMap id="BaseResultMap" type="pojo.ShowAnjuke">
 		<result column="name" property="name" jdbcType="VARCHAR" />
@@ -32,7 +30,7 @@
 			limit #{start},#{size}
 		</if>
 	</select>
-	
+
 	<!-- 根据分页数据start 和size查询数据 -->
 	<select id="findByPageAll" parameterType="Map" resultMap="BaseResultMap">
 		select
@@ -54,15 +52,15 @@
 		where
 		rent_way = #{rentWay,jdbcType=VARCHAR}
 	</select>
-	
+
 	<!-- 查询用户记录总数 -->
 	<select id="selectCountTwo" resultType="int">
 		select count(*)
 		from
 		main_score
 	</select>
-	
-	
+
+
 
 	<resultMap id="OtherResultMap" type="pojo.ShowOther">
 		<result column="row_col" property="rowCol" jdbcType="VARCHAR" />
@@ -84,7 +82,6 @@
 		from
 		main_score
 	</select>
-	
 
 	<resultMap id="BaseResultMapTwo" type="pojo.Anjuke">
 		<result column="name" property="name" jdbcType="VARCHAR" />
@@ -92,7 +89,8 @@
 		<result column="house_type" property="houseType" jdbcType="VARCHAR" />
 		<result column="rent_way" property="rentWay" jdbcType="VARCHAR" />
 		<result column="price" property="price" jdbcType="DOUBLE" />
-		<result column="payment_method" property="paymentMethod" jdbcType="VARCHAR" />
+		<result column="payment_method" property="paymentMethod"
+			jdbcType="VARCHAR" />
 		<result column="address" property="address" jdbcType="VARCHAR" />
 		<result column="row_col" property="rowCol" jdbcType="VARCHAR" />
 		<result column="url" property="url" jdbcType="VARCHAR" />
@@ -104,34 +102,37 @@
 		from
 		main_information
 		where
-		city = #{city,jdbcType=VARCHAR}  and rent_way = #{rentWay,jdbcType=VARCHAR}  
+		city = #{city,jdbcType=VARCHAR} and rent_way
+		= #{rentWay,jdbcType=VARCHAR}
 	</select>
-	
-	<select id="findAllBasic"  resultMap="BaseResultMapTwo">
+
+	<select id="findAllBasic" resultMap="BaseResultMapTwo">
 		select
 		name,area,house_type,rent_way,price,payment_method,address,row_col,url
 		from
 		main_information
 		where
-		city = #{city,jdbcType=VARCHAR} 
+		city = #{city,jdbcType=VARCHAR}
 	</select>
-	
+
 	<select id="findBasicSite" resultMap="BaseResultMapTwo">
 		select
 		name,area,house_type,rent_way,price,payment_method,address,row_col,url
 		from
 		main_information
 		where
-		city = #{city,jdbcType=VARCHAR}  and rent_way = #{rentWay,jdbcType=VARCHAR}  and site = #{site,jdbcType=VARCHAR}  
+		city = #{city,jdbcType=VARCHAR} and rent_way
+		= #{rentWay,jdbcType=VARCHAR} and site = #{site,jdbcType=VARCHAR}
 	</select>
-	
-	<select id="findAllBasicSite"  resultMap="BaseResultMapTwo">
+
+	<select id="findAllBasicSite" resultMap="BaseResultMapTwo">
 		select
 		name,area,house_type,rent_way,price,payment_method,address,row_col,url
 		from
 		main_information
 		where
-		city = #{city,jdbcType=VARCHAR}   and site = #{site,jdbcType=VARCHAR}  
+		city = #{city,jdbcType=VARCHAR} and site =
+		#{site,jdbcType=VARCHAR}
 	</select>
 
 
@@ -154,10 +155,10 @@
 	    					#{item.score,jdbcType=DOUBLE}
 	    				)
 	    		     </foreach>		
-	</insert> 
+	</insert>
 
-	<delete id="deleteScore" >
-        truncate table main_score;
-    </delete>
+	<delete id="deleteScore">
+		truncate table main_score;
+	</delete>
 
 </mapper>

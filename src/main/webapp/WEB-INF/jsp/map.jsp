@@ -79,7 +79,7 @@ html, body, #container {
 		<div
 			style="margin: 10px auto; width: 900px; height: 50px; text-align: center">
 			<a
-				href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&currentPage=1&rentWay=${requestScope.rentWay}">
+				href="${pageContext.request.contextPath }/mainPage?city=${requestScope.city}&location=${requestScope.location}&currentPage=1&rentWay=${requestScope.rentWay}">
 				<button type="button" class="btn btn-default">数据表格</button>
 			</a> <a href="${pageContext.request.contextPath }/welcomePro">
 				<button type="button" class="btn btn-default">返回首页</button>
@@ -92,12 +92,33 @@ html, body, #container {
 			src="https://webapi.amap.com/maps?v=1.4.14&key=59f8184c1ace09d8dfa3e2fc9cadf12c"></script>
 		<script type="text/javascript">
 					var markers = ${requestScope.jsonData};
+					var self = ${requestScope.jsonSelf};
 					var map = new AMap.Map('container', {
 						resizeEnable : true,
-						center: [markers[0].position[0], markers[0].position[1]],//中心点
+						center: [self[0], self[1] ],//中心点
 						zoom : 13
 					});
 					map.clearMap(); // 清除地图覆盖物
+				    // 创建一个 Icon
+				    var startIcon = new AMap.Icon({
+				        // 图标尺寸
+				        size: new AMap.Size(25, 34),
+				        // 图标的取图地址
+				        image: '//a.amap.com/jsapi_demos/static/demo-center/icons/dir-marker.png',
+				        // 图标所用图片大小
+				        imageSize: new AMap.Size(135, 40),
+				        // 图标取图偏移量
+				        imageOffset: new AMap.Pixel(-9, -3)
+				    });
+					 var markerSelf = new AMap.Marker({
+							map : map,
+							// 将 html 传给 content
+					       // content: markerContentSelf,
+					        icon: startIcon,
+							position : [ self[0], self[1] ],
+							offset : new AMap.Pixel(-13, -30)
+						});
+					map.add(markerSelf);
 					for(var i =0;i<markers.length;i++){
 						var row = markers[i].position[0];
 						var col = markers[i].position[1];

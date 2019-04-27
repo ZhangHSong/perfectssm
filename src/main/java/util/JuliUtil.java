@@ -17,8 +17,7 @@ public class JuliUtil{
     */
    public static double calculateLineDistance(String[] arr1, String[] arr2)
    {
-      if ((arr1 == null) || (arr2 == null))
-      {
+      if ((arr1 == null) || (arr2 == null)){
          throw new IllegalArgumentException("非法坐标值，不能为null");
       }
       double d1 = 0.01745329251994329D;
@@ -49,7 +48,6 @@ public class JuliUtil{
       double d14 = Math.sqrt((arrayOfDouble1[0] - arrayOfDouble2[0]) * (arrayOfDouble1[0] - arrayOfDouble2[0])
             + (arrayOfDouble1[1] - arrayOfDouble2[1]) * (arrayOfDouble1[1] - arrayOfDouble2[1])
             + (arrayOfDouble1[2] - arrayOfDouble2[2]) * (arrayOfDouble1[2] - arrayOfDouble2[2]));
-
       return Double.valueOf(String.format("%.2f", (Math.asin(d14 / 2.0D) * 12742001.579854401D)/1000).toString());
    }
    
